@@ -48,6 +48,8 @@ class Gallery
 
         this.galleryItems = new Array(this.imageSrc.length);
 
+        console.log("Loaded " + this.imageSrc.length + " images for mini-gallery.");
+
         for (var i = 0; i < this.imageSrc.length; i++)
         {
             var imageElement = document.createElement("img");
@@ -83,7 +85,7 @@ class Gallery
 
     shiftSlots(amount)
     {
-        this.slotOffset = (this.slotOffset + amount) % (this.slotCount + 1);
+        this.slotOffset = (this.slotOffset + amount) % (this.galleryItems.length);
         if (this.slotOffset < 0)
         {
             this.slotOffset += this.slotCount + 1;
@@ -96,7 +98,7 @@ class Gallery
             {
                 this.gallerySlots[i].removeChild(oldImage);
             }
-            this.gallerySlots[i].appendChild(this.galleryItems[(this.slotOffset + i) % (this.slotCount + 1)]);
+            this.gallerySlots[i].appendChild(this.galleryItems[(this.slotOffset + i) % (this.galleryItems.length)]);
         }
     }
 }
