@@ -81,6 +81,7 @@
 
 .exhibit>.primary {
     width: auto;
+    max-width: 100%;
     position: relative;
     aspect-ratio: 16 / 9;
 
