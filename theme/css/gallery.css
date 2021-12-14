@@ -3,8 +3,23 @@
     flex-direction: column;
     flex-wrap: nowrap;
 
+    flex: 1 1 0;
+
+    width: 100%;
+
     box-shadow: var(--shadow);
     padding: 0;
+    margin: auto 2rem;
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 3.5rem;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .mini-gallery {
@@ -36,14 +51,14 @@
     text-align: center;
 }
 
-.mini-gallery>.arrow {
+.mini-gallery>.arrowRight, .mini-gallery>.arrowLeft {
     user-select: none; /* supported by Chrome and Opera */
     -webkit-user-select: none; /* Safari */
     -khtml-user-select: none; /* Konqueror HTML */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     
-    color: var(--color-primary-light);
+    color: transparent;
 
     flex-grow: 1;
     flex: 1 1 0;
@@ -58,10 +73,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    mask-image: url('/theme/img/arrowright.png');
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-clip: padding-box;
+    mask-size: 80%;
+
+    background-color: var(--color-primary-light);
 }
 
-.mini-gallery>.arrow:hover {
-    color: var(--color-primary-mid);
+.arrowLeft {
+    transform: scaleX(-1);
+}
+
+
+.mini-gallery>.arrowLeft:hover, .mini-gallery>.arrowRight:hover{
+    background-color: var(--color-primary-mid);
 }
 
 .gallery-item>img {
@@ -97,8 +125,11 @@ hr {
     padding: 0;
 }
 
+a>img {
+    vertical-align: top;
+}
 
-@media only screen and (max-device-width: 640px) {
+@media only screen and (max-device-width: 1024px) {
     .mini-gallery>.gallery-item{
         padding: 0;
         margin: 0;
@@ -108,5 +139,11 @@ hr {
     }
     .primary {
         margin: 0;
+    }
+    .exhibit {
+        margin: 2rem 0;
+    }
+    .main-content {
+        flex-direction: column;
     }
 }

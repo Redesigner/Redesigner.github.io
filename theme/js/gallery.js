@@ -26,8 +26,8 @@ class Gallery
             this.slotCount -= 1;
 
             var leftArrow = document.createElement('li');
-            leftArrow.textContent = "<";
-            leftArrow.setAttribute('class', 'arrow');
+            leftArrow.textContent = ">";
+            leftArrow.setAttribute('class', 'arrowLeft');
 
             let gallery = this;
             leftArrow.addEventListener('click', function() {
@@ -72,7 +72,7 @@ class Gallery
         {
             var rightArrow = document.createElement('li');
             rightArrow.textContent = ">";
-            rightArrow.setAttribute('class', 'arrow');
+            rightArrow.setAttribute('class', 'arrowRight');
 
             let gallery = this;
             rightArrow.addEventListener('click', function() {

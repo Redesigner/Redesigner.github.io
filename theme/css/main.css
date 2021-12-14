@@ -20,6 +20,10 @@ body {
     max-width: 90rem;
 }
 
+p {
+    line-height: 1.5rem;
+}
+
 .main-content {
     padding: 5rem;
 
@@ -27,6 +31,10 @@ body {
     margin-bottom: 5rem;
     
     box-shadow: var(--shadow);
+}
+
+.main-content>div {
+    flex: 1 1 0;
 }
 
 h1, h2, h3 {
@@ -99,7 +107,7 @@ a.noclick
     text-decoration: none;
 }
 
-footer{
+footer {
     background-color: var(--color-primary-dark);
 
     color: var(--color-primary-light);
@@ -111,13 +119,17 @@ footer{
     box-shadow: var(--shadow);
 }
 
-footer::before{
+footer::before {
     background-color: var(--color-secondary-dark);
     content: '';
     display: inline-block;
     width: 100%;
     height: 4rem;
     margin-bottom: 2rem;
+}
+
+footer>a {
+    font-size: 0.7rem;
 }
 
 iframe {
@@ -128,7 +140,19 @@ iframe {
     color: var(--color-primary-dark);
 }
 
-@media only screen and (max-device-width: 640px) {
+.intro {
+    font-size: 1.9rem;
+
+    color: var(--color-secondary-light);
+    background-color: var(--color-primary-dark);
+
+    margin: 0 auto 0 auto;
+    padding: 2rem;
+
+    text-align: center;
+}
+
+@media only screen and (max-device-width: 1024px) {
     html{
         font-size: 2vw;
     }
@@ -137,6 +161,9 @@ iframe {
         margin: 0 1rem 0 1rem;
     }
     .main-content {
-        padding: 0;
+        padding: 0 2rem;
+    }
+    h1 {
+        margin-top: 0;
     }
 }
