@@ -156,6 +156,10 @@ iframe {
     text-align: center;
 }
 
+ul {
+    line-height: 1.5rem;
+}
+
 @media only screen and (max-device-width: 1024px) {
     html{
         font-size: 2vw;

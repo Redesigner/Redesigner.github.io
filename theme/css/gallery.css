@@ -121,13 +121,26 @@ h1 {
 
 hr {
     width: 100%;
-    margin: 2rem 0 0 0;
+    margin: 0;
     padding: 0;
 }
 
 a>img {
     vertical-align: top;
 }
+
+.downloads {
+    display: flex;
+    padding: 1rem 0;
+    margin: 0;
+}
+
+.downloads>* {
+    font-style: italic;
+    text-align: center;
+    margin: 0 2rem 0 0;
+}
+
 
 @media only screen and (max-device-width: 1024px) {
     .mini-gallery>.gallery-item{
