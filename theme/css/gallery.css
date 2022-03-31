@@ -10,6 +10,8 @@
     box-shadow: var(--shadow);
     padding: 0;
     margin: auto 2rem;
+
+    background-color: var(--color-secondary-dark);
 }
 
 h1 {
@@ -33,7 +35,7 @@ h1 {
 
     margin: 0;
 
-    background-color: var(--color-secondary-dark);
+    /* background-color: var(--color-secondary-dark); */
 }
 
 .mini-gallery>.gallery-item {
@@ -74,6 +76,7 @@ h1 {
     justify-content: center;
     align-items: center;
 
+    -webkit-mask-image: url('/theme/img/arrowright.png');
     mask-image: url('/theme/img/arrowright.png');
     mask-position: center;
     mask-repeat: no-repeat;
@@ -92,7 +95,7 @@ h1 {
     background-color: var(--color-primary-mid);
 }
 
-.gallery-item>img {
+.gallery-item>* {
     width: 100%;
     height: 100%;
     aspect-ratio: 16 / 9;
@@ -116,7 +119,26 @@ h1 {
     margin-bottom: 0;
     padding: 2%;
 
-    background-color: var(--color-secondary-dark);
+    border-width: 0px;
+}
+
+.videocontainer {
+    display: block;
+    position: relative;
+}
+.playbutton {
+    display: block;
+    position: absolute;
+
+    top: 25%;
+    left: 25%;
+
+    height: 50%;
+    width: 50%;
+}
+.thumbnail {
+    width: 100%;
+    height: 100%;
 }
 
 hr {
@@ -125,16 +147,15 @@ hr {
     padding: 0;
 }
 
-a>img {
+/* a>img {
     vertical-align: top;
-}
+} */
 
 .downloads {
     display: flex;
     padding: 1rem 0;
     margin: 0;
 }
-
 .downloads>* {
     font-style: italic;
     text-align: center;

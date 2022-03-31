@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
 <html lang="en">
 <head>
+   <meta charset="UTF-8">
    <link rel="stylesheet" type="text/css" href="./theme/css/main.css" />
    <link rel="stylesheet" type="text/css" href="./theme/css/colors.css" />
    <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="16x16">
@@ -16,10 +16,47 @@
     <li><a class="noclick" href="./projects.html">Projects</a></li>
             <li><a class="noclick" href="./resume.html">Resume</a></li>
 </ul>    <h1 class="intro">Here are some of the past and present projects I've been working on:</h1>
-    <link rel="stylesheet" href="../theme/css/gallery.css">
+    <link rel="stylesheet" href="theme/css/gallery.css">
 <div class="main-content">
     <div class="exhibit">
-        <img class="primary" src="./images/bg.png">
+        <meta class="srccontainer" url="
+        sample1.png" title="rea">
+        <ul class="mini-gallery">
+        </ul>
+    </div>
+    <div>
+        <h1>Rea</h1>
+        
+        <p>
+            A C++ engine and OpenGL render pipeline.
+
+            <h2>Features</h2>
+            <ul>
+                <li>Custom render pipeline</li>
+                <li>Continuous collision detection</li>
+                <li>Wavefront (*.obj) mesh loading</li>
+                <li>Entity-component messaging system</li>
+                <li>Font rendering</li>
+            </ul>
+
+            This engine uses <a href="https://www.libsdl.org/">SDL2</a> for managing window and input events, <a href="https://www.libsdl.org/projects/SDL_image/">SDL-Image</a>, 
+            and the <a href="https://freetype.org/">FreeType library</a> for generating and caching bitmaps from system font files.
+        </p>
+        <p>
+            Continous collision detection is based on the <a href="">Gilbert-Johnson-Keerthi</a> model and my own implementation.
+            Rea uses a custom OpenGL render pipeline and supports loading of custom GLSL 4 shaders.
+        </p>
+    
+
+            <a href="https://github.com/Redesigner/Ceres">
+                <img src="./theme/img/GitHub-Mark-Light-32px.png" title="Check it out on GitHub!" alt="GitHub Logo" style="margin-bottom: 1rem;">
+            </a>
+        <hr>
+        <h3 class="timestamp">March 2022</h3>
+    </div>
+</div>
+<div class="main-content">
+    <div class="exhibit">
         <meta class="srccontainer" url="
             demo1.png;
             demo3.png;
@@ -67,7 +104,6 @@
 </div>
 <div class="main-content">
     <div class="exhibit">
-        <img class="primary" src="./images/bg.png">
         <meta class="srccontainer" url="
             boxes.png;
             wireframe.png;
@@ -111,9 +147,9 @@
 </div>
 <div class="main-content">
     <div class="exhibit">
-        <img class="primary" src="./images/bg.png">
         <meta class="srccontainer" url="
-        titlescreen.png" title="train">
+            https://www.youtube-nocookie.com/embed/_0YhCfh7C8k?controls=0
+        " title="train">
         <ul class="mini-gallery">
         </ul>
     </div>
@@ -144,9 +180,9 @@
 </div>
 <div class="main-content">
     <div class="exhibit">
-        <img class="primary" src="./images/bg.png">
         <meta class="srccontainer" url="
             titlescreen.png;
+            https://www.youtube-nocookie.com/embed/uzE3dhLQSSU?controls=0;
             still1.png;
             still2.png;
             still3.png" title="hearth">
@@ -163,7 +199,8 @@
             <li>Animation</li>
         </ul>
         <p>
-            A 2019 entry for the Global Game Jam, produced in 48 hours.
+            A 2019 entry for the Global Game Jam, produced in 48 hours. You can find the orignal entry page on the 
+            <a href="https://globalgamejam.org/2019/games/hearth-6">Global Game Jam website</a>.
             </br>
             This entry was made with a team of five, based on a theme revealed at the start of the jam.
             It runs in the <a href="https://godotengine.org/">Godot Engine</a>.
@@ -186,7 +223,7 @@
         <h3 class="timestamp">January 2019</h3>
     </div>
 </div>
-    <script src="../theme/js/gallery.js"></script>
+    <script src="theme/js/gallery.js" ></script>
     <footer>
         Copyright © 2021 Stephen Melnick
         <br>
