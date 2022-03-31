@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <link rel="stylesheet" type="text/css" href="./theme/css/main.css" />
+   <link rel="stylesheet" type="text/css" href="./theme/css/colors.css" />
+   <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="16x16">
+   <title>Stephen Melnick - Rea</title>
+</head>
+<body id="index" class="home">
+<ul class="navbar">
+    <li class="avatar"><a href=".">
+        <img src="./images/avatar.jpg" alt="Avatar">
+        </a>
+    </li>
+    <li><a class="noclick" href="./projects.html">Projects</a></li>
+            <li><a class="noclick" href="./resume.html">Resume</a></li>
+</ul><section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="./rea.html" rel="bookmark"
+         title="Permalink to Rea">Rea</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-03-30T00:00:00-04:00">
+      Wed 30 March 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="./author/stephen-melnick.html">Stephen Melnick</a>
+    </address>
+    <div class="category">
+        Category: <a href="./category/articles.html">articles</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    
+        <p>
+            A C++ engine and OpenGL render pipeline.
+
+            <h2>Features</h2>
+            <ul>
+                <li>Custom render pipeline</li>
+                <li>Continuous collision detection</li>
+                <li>Wavefront (*.obj) mesh loading</li>
+                <li>Entity-component messaging system</li>
+                <li>Font rendering</li>
+            </ul>
+
+            This engine uses <a href="https://www.libsdl.org/">SDL2</a> for managing window and input events, <a href="https://www.libsdl.org/projects/SDL_image/">SDL-Image</a>, 
+            and the <a href="https://freetype.org/">FreeType library</a> for generating and caching bitmaps from system font files.
+        </p>
+        <p>
+            Continous collision detection is based on the <a href="">Gilbert-Johnson-Keerthi</a> model and my own implementation.
+            Rea uses a custom OpenGL render pipeline and supports loading of custom GLSL 4 shaders.
+        </p>
+    
+  </div><!-- /.entry-content -->
+</section>
+    <footer>
+        Copyright © 2021 Stephen Melnick
+        <br>
+        <a href='https://github.com/Redesigner/Redesigner.github.io'>Source code available on GitHub</a>
+    </footer>
+</body>
+</html>

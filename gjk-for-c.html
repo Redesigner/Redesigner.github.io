@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
 <html lang="en">
 <head>
+   <meta charset="UTF-8">
    <link rel="stylesheet" type="text/css" href="./theme/css/main.css" />
    <link rel="stylesheet" type="text/css" href="./theme/css/colors.css" />
+   <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="16x16">
+   <title>Stephen Melnick - GJK for C#</title>
 </head>
 <body id="index" class="home">
-    <ul class="navbar">
-        <li class="avatar"><a href="./index.html">
-            <img src="./images/avatar.jpg" alt="Avatar">
-            </a>
-        </li>
-        <li><a class="noclick" href="./projects.html">Projects</a></li>
+<ul class="navbar">
+    <li class="avatar"><a href=".">
+        <img src="./images/avatar.jpg" alt="Avatar">
+        </a>
+    </li>
+    <li><a class="noclick" href="./projects.html">Projects</a></li>
             <li><a class="noclick" href="./resume.html">Resume</a></li>
-    </ul>
-<section id="content" class="body">
+</ul><section id="content" class="body">
   <header>
     <h2 class="entry-title">
       <a href="./gjk-for-c.html" rel="bookmark"
@@ -35,26 +36,22 @@
   <div class="entry-content">
     
         <p>
-            A 3D implementation of the Gilbert-Johnson-Keerthi distance algorithim, for use in <i>Continuous Collision Detection</i> physics simulations.
+            This project is a 3D implementation of the Gilbert-Johnson-Keerthi distance algorithim, for use in <i>Continuous Collision Detection</i> physics simulations.
             It contains a simple gift wrapping algorithim for determining convex hulls, and can calculate the distance between two 3D objects, as well as
             calculate the shortest depenetration vector for resolving any overlaps. The interactive demo allows you to move a cube around in 3D space,
             rendering the Minkowski difference of the two closest shapes, as well as the generated simplex.
         </p>
         <p>
-            You can check out this presentation that I wrote, explaining the basic principles of the algorithim, and some solutions to more practical problems
+            You can check out the presentation that I wrote (linked below), explaining the basic principles of the algorithim, and some solutions to more practical problems
             one might experience when implementing the algorithim, especially given its reliance on floating-point math.
-        </p>
-        <p>
-            Downloads available in either: </br>
-            <a href="../downloads/Melnick-GJK-2021.pdf" download>PDF</a>
-            or
-            <a href="../downloads/Melnick-GJK-2021.odp" download>ODP</a>
         </p>
     
   </div><!-- /.entry-content -->
 </section>
     <footer>
         Copyright © 2021 Stephen Melnick
+        <br>
+        <a href='https://github.com/Redesigner/Redesigner.github.io'>Source code available on GitHub</a>
     </footer>
 </body>
 </html>
