@@ -2,27 +2,42 @@
 <html lang="en">
 <head>
    <meta charset="UTF-8">
-   <link rel="stylesheet" type="text/css" href="../theme/css/main.css" />
-   <link rel="stylesheet" type="text/css" href="../theme/css/colors.css" />
+   <link rel="stylesheet" type="text/css" href="./theme/css/main.css" />
+   <link rel="stylesheet" type="text/css" href="./theme/css/colors.css" />
    <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="16x16">
-   <title>Stephen Melnick - Articles </title>
+   <title>Stephen Melnick - OpenGL Skeletal Animations</title>
 </head>
 <body id="index" class="home">
 <ul class="navbar">
-    <li class="avatar"><a href="..">
-        <img src="../images/avatar.jpg" alt="Avatar">
+    <li class="avatar"><a href=".">
+        <img src="./images/avatar.jpg" alt="Avatar">
         </a>
     </li>
-        <li><a class="noclick" href="../category/articles.html">Articles</a></li>
-        <li><a class="noclick" href="../category/projects.html">Projects</a></li>
+        <li><a class="noclick" href="./category/articles.html">Articles</a></li>
+        <li><a class="noclick" href="./category/projects.html">Projects</a></li>
 
-            <li><a class="noclick" href="../resume.html">Resume</a></li>
+            <li><a class="noclick" href="./resume.html">Resume</a></li>
 
-</ul>        <link rel="stylesheet" href="../theme/css/diagram.css">
-
-            <div class="main-content">
-                <h1>OpenGL Skeletal Animations</h1>
-                
+</ul><section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="./opengl-skeletal-animations.html" rel="bookmark"
+         title="Permalink to OpenGL Skeletal Animations">OpenGL Skeletal Animations</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-03-08T00:00:00-05:00">
+      Tue 08 March 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="./author/stephen-melnick.html">Stephen Melnick</a>
+    </address>
+    <div class="category">
+        Category: <a href="./category/articles.html">articles</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    
         <h2>Skeletal Animation Data Storage</h2>
         <p>
             Videogame character animations are typically done using <i>skeletal animations</i>. This means taking a mesh, and assigning portions of the mesh to a solid <i>bone</i> object, similarly to the way the skin and muscle tissue are attached to your real-life bones. As the bones are transformed, the corresponding parts of the mesh will be transformed as well. These transforms are applied to every single vertex in the mesh, potentially every frame, so the way that they are stored is critical to ensuring reasonable performance. Character meshes frequently have upwards of 100,000 vertices - modern graphics processors have no problem handling this math, so long as the data is stored efficiently.
@@ -109,10 +124,8 @@
             </div>
         </div>
     
-                <hr>
-                <h3 class="timestamp">March 2022</h3>        
-            </div>
-        
+  </div><!-- /.entry-content -->
+</section>
     <footer>
         Copyright © 2021 Stephen Melnick
         <br>

@@ -1,3 +1,5 @@
+var rootURL = document.location.protocol + '//' + document.location.host;
+
 class Gallery
 {
     constructor(rootElement, slotCount)
@@ -28,7 +30,7 @@ class Gallery
         else
         {
             var exhibitMainDisplay = document.createElement("img");
-            exhibitMainDisplay.setAttribute('src', 'images/' + title + '/' + this.imageSrc[0].trim());
+            exhibitMainDisplay.setAttribute('src', rootURL + '/images/' + title + '/' + this.imageSrc[0].trim());
             exhibitMainDisplay.setAttribute("class", "primary");
             exhibitElement.insertBefore(exhibitMainDisplay, exhibitElement.firstChild);
         }
@@ -76,7 +78,7 @@ class Gallery
                 }
                 else
                 {
-                    galleryItem = new ImageContainer(exhibitElement, 'images/' + title + '/' + localSrc);
+                    galleryItem = new ImageContainer(exhibitElement, rootURL + '/images/' + title + '/' + localSrc);
                 }
                 this.galleryItems[i] = galleryItem;
 
@@ -167,7 +169,7 @@ class VideoContainer extends GalleryItem
         subImage.setAttribute('class', 'thumbnail');
 
         var playbutton = document.createElement("img");
-        playbutton.setAttribute('src', 'theme/img/playbutton.svg')
+        playbutton.setAttribute('src', rootURL + '/theme/img/playbutton.svg')
         playbutton.setAttribute('class', 'playbutton');
 
         var meta = document.createElement("meta");
