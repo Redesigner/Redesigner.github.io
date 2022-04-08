@@ -1,0 +1,95 @@
+.diagram {
+	display: block;
+	width: 60%;
+	padding: 2rem;
+	margin: auto;
+	background-color: var(--color-secondary-light);
+}
+.diagram p, .diagram h1, .diagram h2, .diagram h3 {
+	color: black;
+}
+
+.diagram li {
+	color: black;
+	text-align: left;
+	font-size: 0.8rem;
+}
+
+.diagram .box {
+	background-color: white;
+	color: black;
+
+	margin: 2rem;
+	padding: 2rem 0;
+	text-align: center;
+	border-style: solid;
+	border-width: 0.1rem;
+	border-color: black;
+
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.diagram .box:hover + .popoutl, .diagram .box:hover + .popoutr, .diagram .box-nomargin:hover + .popoutr, .diagram .box-nomargin:hover + .popoutl {
+	display: block;
+}
+.diagram .popoutl, .diagram .popoutr{
+	display: none;
+	position: absolute;
+	background-color: var(--color-secondary-dark);
+	color: white;
+	width: 12rem;
+	transform: translate(-100%, -200%);
+	padding: 1rem;
+}
+
+.diagram .popoutr {
+	transform: translate(100%, -100%);
+}
+
+.diagram .two-columns {
+	display: flex;
+	flex-direction: row;
+}
+
+.diagram .two-columns>* {
+	flex-grow: 1;
+}
+
+.diagram .box-nomargin {
+	background-color: #cfe2f3ff;
+	color: black;
+
+	margin: 0;
+	padding: 2rem 0;
+	text-align: center;
+	border-style: solid;
+	border-width: 0.1rem;
+	border-color: black;
+
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.overlay {
+	position: relative;
+}
+.overlay>* {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.inline-wrap {
+	text-align: center;
+	margin: 2rem auto;
+	padding: 1rem;
+	background-color: var(--color-secondary-dark);
+	width: fit-content;
+}
+
+.inline-wrap .caption {
+	display: table-caption;
+	caption-side: bottom;
+	width: fit-content;
+	padding: 0.5rem;
+}

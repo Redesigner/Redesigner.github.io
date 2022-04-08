@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="97.134201"
+   height="95.938484"
+   viewBox="0 0 25.70009 25.383724"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="arrowup.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="3.1072952"
+     inkscape:cx="28.159539"
+     inkscape:cy="29.125009"
+     inkscape:window-width="1848"
+     inkscape:window-height="1057"
+     inkscape:window-x="64"
+     inkscape:window-y="-7"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="px" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="40.786411,113.75917"
+       end_point="65.90539,113.75917"
+       center_point="53.3459,113.75917"
+       id="path-effect3660"
+       is_visible="true"
+       lpeversion="1.1"
+       mode="Y"
+       discard_orig_path="false"
+       fuse_paths="true"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-40.496634,-101.06693)">
+    <path
+       id="rect846"
+       style="fill:#8de6fe;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 51.703125,101.04102 -0.04297,6.05273 H 40.787109 v 6.66602 6.66601 h 10.873047 l 0.04297,6.05078 14.203125,-12.67578 v -0.041 -0.043 z"
+       inkscape:path-effect="#path-effect3660"
+       inkscape:original-d="M 40.786411,106.8621 H 65.90539 v 6.93965 l -14.201988,12.67533 -0.04257,-6.05179 H 40.786415 Z"
+       sodipodi:nodetypes="ccccccc"
+       transform="rotate(-90,53.34668,113.75879)" />
+  </g>
+</svg>

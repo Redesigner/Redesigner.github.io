@@ -106,7 +106,7 @@ h1 {
     box-shadow: var(--shadow);
 }
 
-.gallery-item>img:hover {
+.gallery-item>img:hover, .gallery-item>.videocontainer:hover{
     opacity: 0.4;
 }
 
@@ -136,6 +136,13 @@ h1 {
     height: 50%;
     width: 50%;
 }
+.primary>.playbutton:hover {
+    top: 23%;
+    left: 23%;
+
+    height: 54%;
+    width: 54%;
+}
 .thumbnail {
     width: 100%;
     height: 100%;
@@ -156,6 +163,7 @@ hr {
     padding: 1rem 0;
     margin: 0;
 }
+
 .downloads>* {
     font-style: italic;
     text-align: center;
