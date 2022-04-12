@@ -4,9 +4,14 @@
 	padding: 2rem;
 	margin: auto;
 	background-color: var(--color-secondary-light);
+	box-shadow: var(--shadow);
 }
 .diagram p, .diagram h1, .diagram h2, .diagram h3 {
 	color: black;
+}
+
+.diagram ul {
+	padding: 1rem;
 }
 
 .diagram li {
@@ -20,7 +25,7 @@
 	color: black;
 
 	margin: 2rem;
-	padding: 2rem 0;
+	padding: 2rem 1rem;
 	text-align: center;
 	border-style: solid;
 	border-width: 0.1rem;
@@ -77,6 +82,10 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	text-align: center;
+}
+.overlay>img {
+	width: 5rem;
 }
 
 .inline-wrap {
@@ -85,6 +94,7 @@
 	padding: 1rem;
 	background-color: var(--color-secondary-dark);
 	width: fit-content;
+	box-shadow: var(--shadow);
 }
 
 .inline-wrap .caption {

@@ -26,8 +26,8 @@
  
   </header>
   <footer class="post-info">
-    <time class="published" datetime="2022-03-08T00:00:00-05:00">
-      Tue 08 March 2022
+    <time class="published" datetime="2022-03-12T00:00:00-05:00">
+      Sat 12 March 2022
     </time>
     <address class="vcard author">
       By           <a class="url fn" href="./author/stephen-melnick.html">Stephen Melnick</a>
@@ -97,11 +97,14 @@
             <li>Normal - 3 floats <i>(vec3)</i></li>
             <li>Texture coordinates - 2 floats <i>(vec2)</i></li>
         </ul>
+        <pre><code class="language-glsl">layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;</code></pre>
         <p>
             In GLSL, a float has a fixed size of 4 bytes, so we have 32 bytes per vertex. In total, that's 118 kB. Not bad, although this is a pretty simple mesh. <small>As a Wavefront *.obj, the mesh file is about 500kB - it contains quite a few other pieces of data.</small> Now, we just add the weight each bone applies to the vertex, as a float, to our vertex data. Each bone needs a float, so we need 50 floats per vertex for this skeleton... increasing our vertex data size to <b>232 bytes!</b> For the entire mesh, we are now up to 856kB. That's too much data for such a simple mesh. For reference, Kratos, the main character of <i>God of War (2018)</i> was made of about <a href="https://blog.playstation.com/2019/12/16/the-polygonal-evolution-of-5-iconic-playstation-characters/">80,000 polygons</a>. Depending on how the model was laid out, it had 1 to 3 vertices per polygon - vertices can be shared after all! Taking the middle estimate, 160k vertices, means the model would take up 37MB of our VRAM with this scheme.
         </p>
         <div class="inline-wrap">
-            <img src="/images/skeletal/blender2.png" alt="Blender vertex weight display." style="width: 48rem;">
+            <img src="/images/skeletal/blender2.png" alt="Blender vertex weight display." style="width: 48rem; max-width: 80vw;">
             <div class="caption">When inspecting a vertex in Blender, you can see how the weights are represented.</div>
         </div>
         <p>
@@ -123,6 +126,66 @@
                 <div class="popoutl">1 byte</div>
             </div>
         </div>
+        <p>
+            In GLSL, this looks something like this:
+        </p>
+        <pre><code class="language-glsl">layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;
+
+layout(location = 3) in float boneWeight[8];
+layout(location = 4) in int boneIndex[8];
+
+uniform mat4 boneTransforms[50];</code></pre>
+        <p>
+            The VBO data is still represented as a 4-byte primitive type in GLSL - in this case integer, even if the layout specifies it as a byte.
+        </p>
+        <p>
+            Our VAO should be set up like this in C++
+        </p>
+        <pre><code class="language-c++">const size_t size = sizeof(float) * 16 + sizeof(char) * 8;
+glEnableVertexAttribArray(0);
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, size, 0);
+glEnableVertexAttribArray(1);
+glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, size, sizeof(float) * 3);
+glEnableVertexAttribArray(2);
+glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, size, sizeof(float) * 6);
+glEnableVertexAttribArray(3);
+glVertexAttribPointer(3, 8, GL_FLOAT, GL_FALSE, size, sizeof(float) * 8);
+glEnableVertexAttribArray(4);
+glVertexAttribPointer(4, 8, GL_UNSIGNED_BYTE, GL_FALSE, size, sizeof(float) * 16);</code></pre>
+        <p>
+            The bone transformation values can be stored in either a <b>Uniform Buffer Object</b>, or simply bound for each separate skeletal mesh.
+        </p>
+        <pre><code class="language-glsl">#version 400
+
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;
+layout(location = 3) in float boneWeight[8];
+layout(location = 4) in int boneIndex[8];
+
+uniform mat4 model;
+uniform mat4 viewProjection;
+uniform mat4 boneTransforms[50];
+
+void main()
+{
+    vec3 wPosition = (model * vec4(position, 1.0)).xyz;
+    vec3 transformedPosition;
+    for (int i = 0; i < 8; i++)
+    {
+        if (boneWeight[i] > 0.01f)
+        {
+            transformedPosition += (boneTransforms[boneIndex[i]] * vec4(wPosition, 1.0)).xyz * boneWeight[i];
+        }
+    }
+    wPosition = transformedPosition;
+    gl_Position = viewProjection * vec4(transformedPosition, 1.0);
+}</code></pre>
+    <p>
+        It's worth noting that the bone position is a weighted average of all of the bone transforms, so the total bone weight must be 1.0, or the final vertex position will be incorrect. Your 3D animation software should do this automatically, but otherwise, you can normalize the weights when you perform the inital load. In this example, bone weights under 0.01 are discarded.
+    </p>
     
   </div><!-- /.entry-content -->
 </section>
