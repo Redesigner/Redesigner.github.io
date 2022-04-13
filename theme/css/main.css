@@ -197,6 +197,7 @@ code, .code {
 
 .logos img {
     width: 100%;
+    box-shadow: var(--shadow);
 }
 
 @media only screen and (max-device-width: 1024px) {
