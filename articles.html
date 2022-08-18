@@ -5,7 +5,7 @@
    <link rel="stylesheet" type="text/css" href="./theme/css/main.css" />
    <link rel="stylesheet" type="text/css" href="./theme/css/colors.css" />
    <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="16x16">
-   <title>Stephen Melnick - Archives</title>
+   <title>Stephen Melnick - Articles </title>
 </head>
 <body id="index" class="home">
 <ul class="navbar">
@@ -13,27 +13,229 @@
         <img src="./images/avatar.jpg" alt="Avatar">
         </a>
     </li>
-        <li><a class="noclick" href="./category/articles.html">Articles</a></li>
-        <li><a class="noclick" href="./category/projects.html">Projects</a></li>
+        <li><a class="noclick" href="./articles.html">Articles</a></li>
+        <li><a class="noclick" href="./projects.html">Projects</a></li>
 
             <li><a class="noclick" href="./resume.html">Resume</a></li>
 
-</ul><h1>Archives for Stephen Melnick</h1>
+</ul>        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github-dark-dimmed.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/languages/glsl.min.js" integrity="sha512-rP72yenGJy3wWllZpNl830VMft4KdrCNFg+BICGuDHvWCGpOdAHwheyJhb8TQOKYVukUPWBGX7WgKe+b18uF2w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>hljs.highlightAll();</script>
+  
+        <link rel="stylesheet" href="./theme/css/diagram.css">
 
-<dl>
-    <dt>Sun 13 March 2022</dt>
-    <dd><a href="./opengl-skeletal-animations.html">OpenGL Skeletal Animations</a></dd>
-    <dt>Sun 13 March 2022</dt>
-    <dd><a href="./rea.html">Rea</a></dd>
-    <dt>Wed 01 December 2021</dt>
-    <dd><a href="./tether.html">Tether</a></dd>
-    <dt>Fri 12 March 2021</dt>
-    <dd><a href="./gjk-for-c.html">GJK for C#</a></dd>
-    <dt>Mon 13 January 2020</dt>
-    <dd><a href="./meritocracy-train.html">Meritocracy Train</a></dd>
-    <dt>Sun 13 January 2019</dt>
-    <dd><a href="./hearth.html">Hearth</a></dd>
-</dl>
+<div class="main-content">
+	<h1><a href="./articles/designing-networked-player-actions-pt-1.html">Designing Networked Player Actions Pt. 1</a></h1>
+		
+<h2>Authority</h2>
+<p>In order to plan our networking for our multiplayer game, we need to first consider the concept of authority. Due to the fact that any network has some kind of latency, every user in the game has a slightly different copy of the world. The server copy of the world is the 'real' one - the server has authority over everything in the world. If we imagine the clients as strictly 'viewers' of the game world, the server simply tells the clients where every object in the world is. When a client receives the message describing the position of those objects, it updates its 'shadow' copy to reflect these changes.<a class="citation" href="#ref.net1.1">[1]</a></p>
+<p>This means that the clients' copy of the world is behind the server's copy - by however long it takes for the message to travel across the network. With 100ms of latency, every object is behind by 100ms.</p>
+<p>In a platformer game that has moving platforms, this means the player has to anticipate their locations - where they will be in 100ms. This poses an obvious problem - unless our gameplay is centered around predicting the future, we don't want our players to have to do this.</p>
+<p>To fix this issue, we can let the client see our platform's movement logic, and run it locally. This means that the platform will be moving on both the client and the server. What if the client lags or freezes for a second? What if the server lags, but the client doesn't? Regardless, the client and server will now be out of sync. Authority becomes important here as well. We've already decided that the server's platform is the true platform, so the server will send information about the platform like its location and velocity to the clients. Because it's difficult to determine the nature of the lag, or when it occurred, or even if it occurred, we do this periodically. Clients can, upon receiving this information, interpolate the position of the platform how they like, to prevent the appearance of stuttering.</p>
+<p>There is also a separate problem - network latency applies both ways. Assuming our 100ms delay from server-to-client, we also have (roughly) 100ms delay from client-to-server. Since the server is the authority on everything in the world, it owns all the player objects. In order to move the player objects around, clients can send a request to move the players, something like “I pressed forward on my control stick”, and the server will move the player forward - 100ms after the player presses forward. The server then sends a message telling the clients that the player has moved, taking another 100ms.</p>
+<div class="inline-wrap" style="width: 20rem">
+    <video autoplay muted loop>
+        <source src="/images/net1/LatencySim.mp4" type="video/mp4">
+    </video>
+    <div class="caption">This animation illustrates the delay between player input and game response. The outline shows where the player would be on the server, and the shaded sphere shows where the player would appear to be on the client.</div>
+</div>
+<p>Basically, because our server has authority over everything, clients will always be behind the 'real' game world. A simple way to fix this is to give each client authority over their corresponding player. Now, instead of the client sending inputs to the server and waiting to see what happens, it responds to the inputs directly: the client moves the player object and sends a message to the server, letting it know where the player is. It will still take 200ms for other clients to know when the player has moved, but because the other users don't know about the inputs, they won't be able to perceive the input delay. We've effectively fixed the input delay at least, but introduced some new problems.
+    <ol>
+        <li><p>Now that the client has authority over the player, it also means they have to process all of the movement logic - i.e., calculating collisions with world objects. This poses another problem: the 'shadow' world of the owning-client is still behind 100ms. When we calculate our movement logic, we're using stale information. Imagine that a door shuts on the server - until the client receives a message about this, the player may pass through the doorway. It might be acceptable that this happens in your game, but this is not ideal.</p></li>
+        <li><p>We are trusting that the client is telling the truth when transmitting. We can assume that the server is secured, but a client is, by its nature, on the user's machine. It could be modified in many different ways - as long as the client is sending the data, the player will move in potentially erratic ways to give the user an unfair advantage.</p></li>
+    </ol>
+</p>
+<p>Network prediction is our solution to this.</p>
+<p>Instead of giving authority over the player object to the client, we will keep the authority on the server. To prevent input delay, we let the client move their player and keep a record of the inputs that led to that result. The record is sent to the server, as well as the resulting position of the player, where it executes those same inputs on its own copy of the player. If the position at the end of this simulation is different than the one the client sent, the server will tell the client that the position was incorrect, and to make necessary adjustments.<a class="citation" href="#ref.net1.2">[2]</a></p>
+<p>Authority and trust can be metered out to the client in different levels. Imagine a first-person-shooter: we have to determine whether or not a player shot another player, while also limiting the ability of potentially malicious players to cheat. Assuming that the weapons are “hitscan”<a class="citation" href="#ref.net1.3">[3]</a>, i.e., the bullet or other projectile hits its target as soon as it is fired, every time a client clicks on an enemy player from their perspective, that player should always be hit. With very low trust, we can have the client tell the server merely that they fired the weapon and when. This isn't very reliable, because the timestamp of the “weapon fired” packet could be a millisecond off from the player's movement and aim packets and would cause a false miss. Instead, we might give the client a higher level of trust, and allow them to send where they were in the world when they fired the shot. The server could compare this with the location of the targeted player and calculate whether or not the shot hit its target. A malicious client could merely report the shot as originating from the target player, allowing them to land far more shots than a reasonable player could. Since we have the timestamp of the shot being fired, we can implement custom logic to determine whether or not the “weapon fired” packet is reasonable, based on the movement replication done by the server. This isn't perfect, as quickly moving players or players shot at a great distance can have their positions be slightly off in replication, and this may cause some false misses. Instead, we can take the trust another step higher, and have the client calculate whether or not the shot would have hit the target player, and send this to the server. At this level of trust, simply modifying the outgoing packets to say that the bullet hit its target, even if it didn't, is fairly trivial. Most games today settle for the mid-level approach, particularly with player-versus-player combat. Unreal Engine version 4.0 and later supports this kind of prediction by default; much of this is implemented in the <i>UCharacterMovementComponent</i><a class="citation" href="#ref.net1.4">[4]</a> class.</p>
+<div class="inline-wrap">
+    <img src="/images/net1/NetworkingModel.svg" style="background-color: white; width: 50rem;">
+</div>
+<p>Because this article is already getting quite long, I will elaborate on the specific pieces of code in a second part, along with some examples from a multiplayer project I'm working on, at the time of writing.</p>
+    
+		<br>
+		<h2>References</h2>
+		<ol>
+				<li class="footnote">
+					<a id="ref.net1.1"></a>
+					Unity provides some simple documentation on how network authority is implemented in engine: <nobr><a href="https://docs.unity3d.com/2019.3/Documentation/Manual/UNetAuthority.html">https://docs.unity3d.com/2019.3/Documentation/Manual/UNetAuthority.html</a></nobr>
+				</li>
+				<li class="footnote">
+					<a id="ref.net1.2"></a>
+					
+        Network prediction is sometimes referred to as client-side prediction - the server should not be doing any prediction: <nobr><a href="https://en.wikipedia.org/wiki/Client-side_prediction">https://en.wikipedia.org/wiki/Client-side_prediction</a></nobr>
+				</li>
+				<li class="footnote">
+					<a id="ref.net1.3"></a>
+					
+        For a technical example of how hitscan weapons work, see this article from Valve Software: <nobr><a href="https://developer.valvesoftware.com/wiki/UTIL_TraceLine">https://developer.valvesoftware.com/wiki/UTIL_TraceLine</a></nobr>
+				</li>
+				<li class="footnote">
+					<a id="ref.net1.4"></a>
+					
+        Epic Games details the process used by current versions of Unreal Engine here: <nobr><a href="https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Networking/CharacterMovementComponent/">https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Networking/CharacterMovementComponent/</a></nobr>
+				</li>
+		</ol>
+	<hr>
+	<h3 class="timestamp">July 2022</h3>        
+</div>
+<div class="main-content">
+	<h1><a href="./articles/opengl-skeletal-animations.html">OpenGL Skeletal Animations</a></h1>
+		
+        <h2>Skeletal Animation Data Storage</h2>
+        <p>
+            Videogame character animations are typically done using <i>skeletal animations</i>. This means taking a mesh, and assigning portions of the mesh to a solid <i>bone</i> object, similarly to the way the skin and muscle tissue are attached to your real-life bones. As the bones are transformed, the corresponding parts of the mesh will be transformed as well. These transforms are applied to every single vertex in the mesh, potentially every frame, so the way that they are stored is critical to ensuring reasonable performance. Character meshes frequently have upwards of 100,000 vertices - modern graphics processors have no problem handling this math, so long as the data is stored efficiently.
+        </p>
+        <div class="inline-wrap">
+            <img src="/images/skeletal/blender1.png" alt="A skeleton applied to a mesh in Blender" style="width: 24rem;">
+            <div class="caption">A mesh, with a skeleton being applied to it in Blender. The bones here are represented as translucent pins.</div>
+        </div>
+        <p>
+            While in a piece of software like Blender these bones have a physical shape, they are merely <i>representations</i> of transformations. If a bone rotates, all of the vertices attached to that bone rotate the same way, with the same origin. The bones can also translate and scale. Just like other types of transformations in 3D graphics, these transformations can be represented as a 4x4 matrix <i>(mat4 in GLSL)</i>. This is also referred to as an affine transformation matrix. Because we know our bones represent transformations, we don't have to do anything with the physical bone object. Instead, we can calculate the transformation of each bone and apply them to our vertices in our vertex shader. These transforms must be updated every time we want to check the animation state of our skeletal mesh. Typically, we check every frame, unless our animation is paused or in an otherwise 'static' state. We need to be careful not to load too much data this way, or it could result in an unnecessary performance cost. On the other hand, our vertex data is only buffered once, so we can easily expand the size of our mesh if we want to include extra attributes, for instance: <b>bone weight</b> values.
+        </p>
+        <div class="diagram">
+            <h2 class="box">Vertex Shader</h2>
+            <div class="two-columns">
+                <div>
+                    <div class="overlay">
+                        <img src="/images/arrowup.svg" alt="arrow">
+                        <h3>Every Frame</h3>
+                    </div>
+                    <div class="box">Uniforms
+                        <hr>
+                        <ul>
+                            <li>B1 transform</li>
+                            <li>B2 transform</li>
+                            <li>...</li>
+                            <li>Bn transform</li>
+                        </ul>
+                    </div>
+                    <div class="popoutl">
+                        Each transformation is a 4x4 matrix of floats. Each float is <b>4 bytes</b>, for a total of <b>64 bytes</b> per bone.
+                    </div>
+                    <div class="box">Buffer binding</div>
+                </div>
+                <div>
+                    <div class="overlay">
+                        <img src="/images/arrowup.svg" alt="arrow">
+                        <h3>Mesh Load</h3>
+                    </div>
+                    <div class="box">Vertex Data</div>
+                    <div class="popoutr">
+                        For a typical layout, each vertex takes about <b>32 bytes</b>: position and normal are each stored as vec3 (3 floats), and UV coordinates as vec2 (2floats), for a total of <b>8 floats</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>
+            Although it depends on the driver level implementation as to the degree, binding a <i>uniform</i> to the current OpenGL state or updating a <i>uniform-buffer</i> is much faster than trying to buffer all new vertices. This also has the benefit of letting us use the GPU for applying our bone transformations to the vertices - the matrix multiplication necessary for this application is essentially a collection of floating point multiplications and additions. CPUs <i>can</i> do the math, but GPUs are designed and optimized for running many of these types of operations simultaneously.
+        </p>
+        <p>
+            Now that our 'bones' are in the GPU and accessible by the vertex shader, we need to actually know which vertices to apply the bone transformations to, and more importantly, decide how we want to store this data. Vertex shaders operate per vertex, as the name suggests, so we flip our idea around. Instead of trying to find out which vertices to apply the bone transforms to, we can find out which bones affect each vertex. That way, we can leverage the parallel processing power of the GPU!
+        </p>
+        <p>
+            In my example mesh, the complete skeleton has 50 bones, and 3,691 <i>unique</i> vertices. Using a simple vertex layout, each vertex is represented by 8 floats:
+        </p>
+        <ul>
+            <li>Position - 3 floats <i>(vec3)</i></li>
+            <li>Normal - 3 floats <i>(vec3)</i></li>
+            <li>Texture coordinates - 2 floats <i>(vec2)</i></li>
+        </ul>
+        <pre><code class="language-glsl">layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;</code></pre>
+        <p>
+            In GLSL, a float has a fixed size of 4 bytes, so we have 32 bytes per vertex. In total, that's 118 kB. Not bad, although this is a pretty simple mesh. <small>As a Wavefront *.obj, the mesh file is about 500kB - it contains quite a few other pieces of data.</small> Now, we just add the weight each bone applies to the vertex, as a float, to our vertex data. Each bone needs a float, so we need 50 floats per vertex for this skeleton... increasing our vertex data size to <b>232 bytes!</b> For the entire mesh, we are now up to 856kB. That's too much data for such a simple mesh. For reference, Kratos, the main character of <i>God of War (2018)</i> was made of about <a href="https://blog.playstation.com/2019/12/16/the-polygonal-evolution-of-5-iconic-playstation-characters/">80,000 polygons</a>. Depending on how the model was laid out, it had 1 to 3 vertices per polygon - vertices can be shared after all! Taking the middle estimate, 160k vertices, means the model would take up 37MB of our VRAM with this scheme.
+        </p>
+        <div class="inline-wrap">
+            <img src="/images/skeletal/blender2.png" alt="Blender vertex weight display." style="width: 48rem; max-width: 80vw;">
+            <div class="caption">When inspecting a vertex in Blender, you can see how the weights are represented.</div>
+        </div>
+        <p>
+            Fortunately, this can be pared down quite a bit. If we limit the number of bones that can influence a vertex, we end up saving a lot of space. After all, even if a skeleton has 50 bones, not all of those are actually going to affect the same areas of the mesh - maybe only one or two apply any kind of transform. With this method, we will need to store the bone index: 1 integer per bone. In <i>Unreal Engine 4</i> the default limit of bone influences is 8. Following this pattern, every vertex contains 8 additional floats, and 8 additional integers for indices. This lands us at the much more reasonable 64 additonal bytes of vertex data - totaling <b>96 bytes per vertex</b>. We can further save data by packing our index values together - we don't have <b>2^32 - 1</b> (roughly 4 billion) bones, so a lot of our index data isn't going to be used. Limiting the bone index to an <i>unsigned byte</i> still gives us access to the range over [0, 255], and shrinks our vertex data size to <b>72 bytes</b>. Internally, our vertex data looks something like this:
+        </p>
+        <div class="diagram">
+            <h2 class="box">Vertex</h2>
+            <div class="popoutl">72 bytes</div>
+            <div class="two-columns">
+                <div class="box-nomargin">Position</div>
+                <div class="popoutl">12 bytes</div>
+                <div class="box-nomargin">Normal</div>
+                <div class="popoutl">12 bytes</div>
+                <div class="box-nomargin">Texture Coordinates</div>
+                <div class="popoutl">8 bytes</div>
+                <div class="box-nomargin">Bone1 Weight</div>
+                <div class="popoutl">4 bytes</div>
+                <div class="box-nomargin">Bone1 Index</div>
+                <div class="popoutl">1 byte</div>
+            </div>
+        </div>
+        <p>
+            In GLSL, this looks something like this:
+        </p>
+        <pre><code class="language-glsl">layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;
+
+layout(location = 3) in float boneWeight[8];
+layout(location = 4) in int boneIndex[8];
+
+uniform mat4 boneTransforms[50];</code></pre>
+        <p>
+            The VBO data is still represented as a 4-byte primitive type in GLSL - in this case integer, even if the layout specifies it as a byte.
+        </p>
+        <p>
+            Our VAO should be set up like this in C++
+        </p>
+        <pre><code class="language-c++">const size_t size = sizeof(float) * 16 + sizeof(char) * 8;
+glEnableVertexAttribArray(0);
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, size, 0);
+glEnableVertexAttribArray(1);
+glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, size, sizeof(float) * 3);
+glEnableVertexAttribArray(2);
+glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, size, sizeof(float) * 6);
+glEnableVertexAttribArray(3);
+glVertexAttribPointer(3, 8, GL_FLOAT, GL_FALSE, size, sizeof(float) * 8);
+glEnableVertexAttribArray(4);
+glVertexAttribPointer(4, 8, GL_UNSIGNED_BYTE, GL_FALSE, size, sizeof(float) * 16);</code></pre>
+        <p>
+            The bone transformation values can be stored in either a <b>Uniform Buffer Object</b>, or simply bound for each separate skeletal mesh.
+        </p>
+        <pre><code class="language-glsl">#version 400
+
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;
+layout(location = 3) in float boneWeight[8];
+layout(location = 4) in int boneIndex[8];
+
+uniform mat4 model;
+uniform mat4 viewProjection;
+uniform mat4 boneTransforms[50];
+
+void main()
+{
+    vec3 wPosition = (model * vec4(position, 1.0)).xyz;
+    vec3 transformedPosition;
+    for (int i = 0; i < 8; i++)
+    {
+        if (boneWeight[i] > 0.01f)
+        {
+            transformedPosition += (boneTransforms[boneIndex[i]] * vec4(wPosition, 1.0)).xyz * boneWeight[i];
+        }
+    }
+    wPosition = transformedPosition;
+    gl_Position = viewProjection * vec4(transformedPosition, 1.0);
+}</code></pre>
+    <p>
+        It's worth noting that the bone position is a weighted average of all of the bone transforms, so the total bone weight must be 1.0, or the final vertex position will be incorrect. Your 3D animation software should do this automatically, but otherwise, you can normalize the weights when you perform the inital load. In this example, bone weights under 0.01 are discarded.
+    </p>
+    
+	<hr>
+	<h3 class="timestamp">March 2022</h3>        
+</div>
+        
     <footer>
         Copyright © 2021 Stephen Melnick
         <br>

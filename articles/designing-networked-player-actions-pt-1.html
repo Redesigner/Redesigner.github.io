@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <link rel="stylesheet" type="text/css" href="../theme/css/main.css" />
+   <link rel="stylesheet" type="text/css" href="../theme/css/colors.css" />
+   <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="16x16">
+   <title>Stephen Melnick - Designing Networked Player Actions Pt. 1 </title>
+</head>
+<body id="index" class="home">
+<ul class="navbar">
+    <li class="avatar"><a href="..">
+        <img src="../images/avatar.jpg" alt="Avatar">
+        </a>
+    </li>
+        <li><a class="noclick" href="../articles.html">Articles</a></li>
+        <li><a class="noclick" href="../projects.html">Projects</a></li>
+
+            <li><a class="noclick" href="../resume.html">Resume</a></li>
+
+</ul>	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github-dark-dimmed.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/languages/glsl.min.js" integrity="sha512-rP72yenGJy3wWllZpNl830VMft4KdrCNFg+BICGuDHvWCGpOdAHwheyJhb8TQOKYVukUPWBGX7WgKe+b18uF2w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>hljs.highlightAll();</script>
+
+	<link rel="stylesheet" href="../theme/css/diagram.css">
+<div class="main-content">
+	<h1><a href="../articles/designing-networked-player-actions-pt-1.html">Designing Networked Player Actions Pt. 1</a></h1>
+		
+<h2>Authority</h2>
+<p>In order to plan our networking for our multiplayer game, we need to first consider the concept of authority. Due to the fact that any network has some kind of latency, every user in the game has a slightly different copy of the world. The server copy of the world is the 'real' one - the server has authority over everything in the world. If we imagine the clients as strictly 'viewers' of the game world, the server simply tells the clients where every object in the world is. When a client receives the message describing the position of those objects, it updates its 'shadow' copy to reflect these changes.<a class="citation" href="#ref.net1.1">[1]</a></p>
+<p>This means that the clients' copy of the world is behind the server's copy - by however long it takes for the message to travel across the network. With 100ms of latency, every object is behind by 100ms.</p>
+<p>In a platformer game that has moving platforms, this means the player has to anticipate their locations - where they will be in 100ms. This poses an obvious problem - unless our gameplay is centered around predicting the future, we don't want our players to have to do this.</p>
+<p>To fix this issue, we can let the client see our platform's movement logic, and run it locally. This means that the platform will be moving on both the client and the server. What if the client lags or freezes for a second? What if the server lags, but the client doesn't? Regardless, the client and server will now be out of sync. Authority becomes important here as well. We've already decided that the server's platform is the true platform, so the server will send information about the platform like its location and velocity to the clients. Because it's difficult to determine the nature of the lag, or when it occurred, or even if it occurred, we do this periodically. Clients can, upon receiving this information, interpolate the position of the platform how they like, to prevent the appearance of stuttering.</p>
+<p>There is also a separate problem - network latency applies both ways. Assuming our 100ms delay from server-to-client, we also have (roughly) 100ms delay from client-to-server. Since the server is the authority on everything in the world, it owns all the player objects. In order to move the player objects around, clients can send a request to move the players, something like “I pressed forward on my control stick”, and the server will move the player forward - 100ms after the player presses forward. The server then sends a message telling the clients that the player has moved, taking another 100ms.</p>
+<div class="inline-wrap" style="width: 20rem">
+    <video autoplay muted loop>
+        <source src="/images/net1/LatencySim.mp4" type="video/mp4">
+    </video>
+    <div class="caption">This animation illustrates the delay between player input and game response. The outline shows where the player would be on the server, and the shaded sphere shows where the player would appear to be on the client.</div>
+</div>
+<p>Basically, because our server has authority over everything, clients will always be behind the 'real' game world. A simple way to fix this is to give each client authority over their corresponding player. Now, instead of the client sending inputs to the server and waiting to see what happens, it responds to the inputs directly: the client moves the player object and sends a message to the server, letting it know where the player is. It will still take 200ms for other clients to know when the player has moved, but because the other users don't know about the inputs, they won't be able to perceive the input delay. We've effectively fixed the input delay at least, but introduced some new problems.
+    <ol>
+        <li><p>Now that the client has authority over the player, it also means they have to process all of the movement logic - i.e., calculating collisions with world objects. This poses another problem: the 'shadow' world of the owning-client is still behind 100ms. When we calculate our movement logic, we're using stale information. Imagine that a door shuts on the server - until the client receives a message about this, the player may pass through the doorway. It might be acceptable that this happens in your game, but this is not ideal.</p></li>
+        <li><p>We are trusting that the client is telling the truth when transmitting. We can assume that the server is secured, but a client is, by its nature, on the user's machine. It could be modified in many different ways - as long as the client is sending the data, the player will move in potentially erratic ways to give the user an unfair advantage.</p></li>
+    </ol>
+</p>
+<p>Network prediction is our solution to this.</p>
+<p>Instead of giving authority over the player object to the client, we will keep the authority on the server. To prevent input delay, we let the client move their player and keep a record of the inputs that led to that result. The record is sent to the server, as well as the resulting position of the player, where it executes those same inputs on its own copy of the player. If the position at the end of this simulation is different than the one the client sent, the server will tell the client that the position was incorrect, and to make necessary adjustments.<a class="citation" href="#ref.net1.2">[2]</a></p>
+<p>Authority and trust can be metered out to the client in different levels. Imagine a first-person-shooter: we have to determine whether or not a player shot another player, while also limiting the ability of potentially malicious players to cheat. Assuming that the weapons are “hitscan”<a class="citation" href="#ref.net1.3">[3]</a>, i.e., the bullet or other projectile hits its target as soon as it is fired, every time a client clicks on an enemy player from their perspective, that player should always be hit. With very low trust, we can have the client tell the server merely that they fired the weapon and when. This isn't very reliable, because the timestamp of the “weapon fired” packet could be a millisecond off from the player's movement and aim packets and would cause a false miss. Instead, we might give the client a higher level of trust, and allow them to send where they were in the world when they fired the shot. The server could compare this with the location of the targeted player and calculate whether or not the shot hit its target. A malicious client could merely report the shot as originating from the target player, allowing them to land far more shots than a reasonable player could. Since we have the timestamp of the shot being fired, we can implement custom logic to determine whether or not the “weapon fired” packet is reasonable, based on the movement replication done by the server. This isn't perfect, as quickly moving players or players shot at a great distance can have their positions be slightly off in replication, and this may cause some false misses. Instead, we can take the trust another step higher, and have the client calculate whether or not the shot would have hit the target player, and send this to the server. At this level of trust, simply modifying the outgoing packets to say that the bullet hit its target, even if it didn't, is fairly trivial. Most games today settle for the mid-level approach, particularly with player-versus-player combat. Unreal Engine version 4.0 and later supports this kind of prediction by default; much of this is implemented in the <i>UCharacterMovementComponent</i><a class="citation" href="#ref.net1.4">[4]</a> class.</p>
+<div class="inline-wrap">
+    <img src="/images/net1/NetworkingModel.svg" style="background-color: white; width: 50rem;">
+</div>
+<p>Because this article is already getting quite long, I will elaborate on the specific pieces of code in a second part, along with some examples from a multiplayer project I'm working on, at the time of writing.</p>
+    
+		<br>
+		<h2>References</h2>
+		<ol>
+				<li class="footnote">
+					<a id="ref.net1.1"></a>
+					Unity provides some simple documentation on how network authority is implemented in engine: <nobr><a href="https://docs.unity3d.com/2019.3/Documentation/Manual/UNetAuthority.html">https://docs.unity3d.com/2019.3/Documentation/Manual/UNetAuthority.html</a></nobr>
+				</li>
+				<li class="footnote">
+					<a id="ref.net1.2"></a>
+					
+        Network prediction is sometimes referred to as client-side prediction - the server should not be doing any prediction: <nobr><a href="https://en.wikipedia.org/wiki/Client-side_prediction">https://en.wikipedia.org/wiki/Client-side_prediction</a></nobr>
+				</li>
+				<li class="footnote">
+					<a id="ref.net1.3"></a>
+					
+        For a technical example of how hitscan weapons work, see this article from Valve Software: <nobr><a href="https://developer.valvesoftware.com/wiki/UTIL_TraceLine">https://developer.valvesoftware.com/wiki/UTIL_TraceLine</a></nobr>
+				</li>
+				<li class="footnote">
+					<a id="ref.net1.4"></a>
+					
+        Epic Games details the process used by current versions of Unreal Engine here: <nobr><a href="https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Networking/CharacterMovementComponent/">https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Networking/CharacterMovementComponent/</a></nobr>
+				</li>
+		</ol>
+	<hr>
+	<h3 class="timestamp">July 2022</h3>        
+</div>
+    <footer>
+        Copyright © 2021 Stephen Melnick
+        <br>
+        <a href='https://github.com/Redesigner/Redesigner.github.io'>Source code available on GitHub</a>
+    </footer>
+</body>
+</html>

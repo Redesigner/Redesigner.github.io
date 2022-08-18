@@ -60,6 +60,11 @@ h3 {
     padding: 0;
 }
 
+img, video
+{
+    max-width: 100%;
+}
+
 ul.navbar {
     display: flex;
     flex-direction: row;
@@ -198,6 +203,17 @@ code, .code {
 .logos img {
     width: 100%;
     box-shadow: var(--shadow);
+}
+
+.citation, .footnote {
+    color: var(--color-primary-light);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+}
+
+.citation {
+    vertical-align: top;
 }
 
 @media only screen and (max-device-width: 1024px) {
