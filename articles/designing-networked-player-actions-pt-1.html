@@ -25,7 +25,7 @@
 
 	<link rel="stylesheet" href="../theme/css/diagram.css">
 <div class="main-content">
-	<h1><a href="../articles/designing-networked-player-actions-pt-1.html">Designing Networked Player Actions Pt. 1</a></h1>
+	<h1><a href="../articles/designing-networked-player-actions-pt-1.html" title="permalink">Designing Networked Player Actions Pt. 1</a></h1>
 		
 <h2>Authority</h2>
 <p>In order to plan our networking for our multiplayer game, we need to first consider the concept of authority. Due to the fact that any network has some kind of latency, every user in the game has a slightly different copy of the world. The server copy of the world is the 'real' one - the server has authority over everything in the world. If we imagine the clients as strictly 'viewers' of the game world, the server simply tells the clients where every object in the world is. When a client receives the message describing the position of those objects, it updates its 'shadow' copy to reflect these changes.<a class="citation" href="#ref.net1.1">[1]</a></p>
@@ -58,22 +58,22 @@
 		<ol>
 				<li class="footnote">
 					<a id="ref.net1.1"></a>
-					Unity provides some simple documentation on how network authority is implemented in engine: <nobr><a href="https://docs.unity3d.com/2019.3/Documentation/Manual/UNetAuthority.html">https://docs.unity3d.com/2019.3/Documentation/Manual/UNetAuthority.html</a></nobr>
+					Unity provides some simple documentation on how network authority is implemented in engine: <a href="https://docs.unity3d.com/2019.3/Documentation/Manual/UNetAuthority.html">https://docs.unity3d.com/2019.3/Documentation/Manual/UNetAuthority.html</a>
 				</li>
 				<li class="footnote">
 					<a id="ref.net1.2"></a>
 					
-        Network prediction is sometimes referred to as client-side prediction - the server should not be doing any prediction: <nobr><a href="https://en.wikipedia.org/wiki/Client-side_prediction">https://en.wikipedia.org/wiki/Client-side_prediction</a></nobr>
+        Network prediction is sometimes referred to as client-side prediction - the server should not be doing any prediction: <a href="https://en.wikipedia.org/wiki/Client-side_prediction">https://en.wikipedia.org/wiki/Client-side_prediction</a>
 				</li>
 				<li class="footnote">
 					<a id="ref.net1.3"></a>
 					
-        For a technical example of how hitscan weapons work, see this article from Valve Software: <nobr><a href="https://developer.valvesoftware.com/wiki/UTIL_TraceLine">https://developer.valvesoftware.com/wiki/UTIL_TraceLine</a></nobr>
+        For a technical example of how hitscan weapons work, see this article from Valve Software: <a href="https://developer.valvesoftware.com/wiki/UTIL_TraceLine">https://developer.valvesoftware.com/wiki/UTIL_TraceLine</a>
 				</li>
 				<li class="footnote">
 					<a id="ref.net1.4"></a>
 					
-        Epic Games details the process used by current versions of Unreal Engine here: <nobr><a href="https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Networking/CharacterMovementComponent/">https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Networking/CharacterMovementComponent/</a></nobr>
+        Epic Games details the process used by current versions of Unreal Engine here: <a href="https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Networking/CharacterMovementComponent/">https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Networking/CharacterMovementComponent/</a>
 				</li>
 		</ol>
 	<hr>

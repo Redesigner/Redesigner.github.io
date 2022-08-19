@@ -21,7 +21,8 @@ body {
 }
 
 p {
-    line-height: 1.5rem;
+    line-height: 2rem;
+    margin: 2rem 0;
 }
 
 .main-content {
@@ -47,13 +48,18 @@ h1, h2, h3 {
 h1 {
     font-size: 3rem;
 }
+h1>a {
+    /* Hide underlines for titles !ONLY!, because it can be very visually distracting. */
+    text-decoration: none;
+}
 
 h3 {
     text-align: right;
 }
 
 .timestamp {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: right;
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
 }
 
 .main {
@@ -90,21 +96,6 @@ ul.navbar>li.avatar {
     padding: 0;
 }
 
-ul.navbar>li {
-    flex-grow: 1;
-    flex: 2 1 0;
-
-    background-color: var(--color-primary-mid);
-
-    text-align: center;
-
-    padding: 1.2rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
-
-    box-shadow: var(--shadow);
-}
-
 .avatar>a>img {
     clip-path: circle(50%);
     width: 100%;
@@ -112,9 +103,28 @@ ul.navbar>li {
     vertical-align: middle;
 }
 
+ul.navbar>li {
+    flex-grow: 1;
+    flex: 2 1 0;
+
+    background-color: var(--color-primary-mid);
+    text-align: center;
+
+    padding: 1.2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+
+    box-shadow: var(--shadow);
+    border-radius: 4rem 1rem .25rem 0.5rem;
+    transition: line-height 0.5s;
+}
 
 ul.navbar>li:hover {
     background-color: var(--color-primary-light);
+    line-height: 0.7rem;
+}
+ul.navbar>li>a {
+    color: var(--color-primary-dark);
 }
 
 a.noclick
@@ -140,7 +150,7 @@ footer::before {
     content: '';
     display: inline-block;
     width: 100%;
-    height: 4rem;
+    height: 0.5rem;
     margin-bottom: 2rem;
 }
 
@@ -192,7 +202,7 @@ code, .code {
     flex-wrap: none;
 
     list-style: none;
-    padding: 2rem;
+    padding: 0 2rem 4rem 2rem 2rem;
 }
 
 .logos>li {

@@ -23,6 +23,9 @@ h1 {
     display: flex;
     flex-direction: row-reverse;
 }
+body>.main-content:first-of-type {
+    padding-top: 0rem;
+}
 
 .mini-gallery {
     display: flex;
@@ -135,6 +138,7 @@ h1 {
 
     height: 50%;
     width: 50%;
+    /* transition: top 1s left 1s height 1s width 1s; */
 }
 .primary>.playbutton:hover {
     top: 23%;
@@ -168,6 +172,7 @@ hr {
     font-style: italic;
     text-align: center;
     margin: 0 2rem 0 0;
+    white-space: nowrap;
 }
 
 
