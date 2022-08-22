@@ -66,12 +66,17 @@ h3 {
     padding: 0;
 }
 
+.printonly {
+    display: none;
+}
+
 img, video
 {
     max-width: 100%;
 }
-
+    
 ul.navbar {
+    
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -230,6 +235,32 @@ code, .code {
 
 .citation {
     vertical-align: top;
+}
+
+@media print {
+    .noprint {
+        display: none;
+        visibility: hidden;
+    }
+    .printonly {
+        display: block;
+        visibility: visible;
+        padding: 2rem;
+        margin: auto;
+        width: 80%;
+    }
+    .main-content {
+        box-shadow: none;
+    }
+    .main-content:not(:last-of-type) {
+        break-after: always;
+    }
+    footer {
+        visibility: hidden;
+    }
+    .timestamp {
+        text-align: left;
+    }
 }
 
 @media only screen and (max-device-width: 1024px) {

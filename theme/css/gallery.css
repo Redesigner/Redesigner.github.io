@@ -175,6 +175,15 @@ hr {
     white-space: nowrap;
 }
 
+@media print {
+    .playbutton, .arrowLeft, .arrowRight {
+        visibility: hidden;
+    }
+    .mini-gallery>.gallery-item:first-of-type{
+        visibility: hidden;
+        display: none;
+    }
+}
 
 @media only screen and (max-device-width: 1024px) {
     .mini-gallery>.gallery-item{
