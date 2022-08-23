@@ -212,10 +212,13 @@ function onButtonClickEvent(owner, clicked)
 
 function setVideoPlayer(owner, video)
 {
+    // This video player is a youtube embed iframe, it appears to have problems with
+    // generating sketchy cookie requests... by design?
     var iFrame = document.createElement('iframe');
     var primaryExhibit = owner.getElementsByClassName("primary")[0];
     iFrame.setAttribute("src", video);
     iFrame.setAttribute("class", "primary");
+    iFrame.setAttribute("cross-origin", "anonymous");
     owner.replaceChild(iFrame, primaryExhibit);
 }
 
