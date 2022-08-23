@@ -140,6 +140,9 @@ class ImageContainer extends GalleryItem
         var element = document.createElement("img");
         element.setAttribute('src', src);
 
+        // Prevent youtube tracking cookies from loading, just in case
+        element.setAttribute('crossorigin', 'anonymous');
+
         super(element);
 
         let clickTarget = rootElement;
@@ -160,9 +163,11 @@ class VideoContainer extends GalleryItem
 
         super(element);
         
+        // Strip the videoID out of the url
         var videoIDIndex = url.search('/embed/');
         var videoID = url.substr(videoIDIndex + 7, 11);
-        var thumbSrc = 'http://img.youtube.com/vi/' + videoID + '/0.jpg';
+        // Grab thumbnail URL from no-cookie variant of youtube; pray it doesn't change :(
+        var thumbSrc = 'https://i1.ytimg.com/vi/' + videoID + '/0.jpg';
 
         var subImage = document.createElement("img")
         subImage.setAttribute('src', thumbSrc);
