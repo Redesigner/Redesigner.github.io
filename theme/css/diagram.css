@@ -100,6 +100,6 @@
 .inline-wrap .caption {
 	display: table-caption;
 	caption-side: bottom;
-	width: fit-content;
+	width: calc(100% - 1rem);
 	padding: 0.5rem;
 }
