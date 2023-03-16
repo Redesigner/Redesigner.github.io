@@ -217,13 +217,12 @@ code, .code {
 
 .logos img {
     width: 100%;
-    box-shadow: var(--shadow);
     transform: translateY(0rem);
     transition: transform 1s;
 }
 
 .logos img:hover {
-    transform: translateY(-2rem);
+    transform: translateY(-1rem);
 }
 
 .citation, .footnote {

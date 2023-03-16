@@ -27,6 +27,23 @@ body>.main-content:first-of-type {
     padding-top: 0rem;
 }
 
+.video-preview {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    flex: 1 1 0;
+
+    width: 100%;
+
+    box-shadow: var(--shadow);
+    padding: 0;
+    margin: auto 2rem;
+
+    color: var(--color-secondary-dark);
+    aspect-ratio: 16 / 9;
+}
+
 .mini-gallery {
     display: flex;
 
