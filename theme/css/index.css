@@ -10,6 +10,10 @@ h1 {
     }
 }
 
+.main-content {
+    padding: 3rem;
+}
+
 .project-gallery {
     max-width: 85rem;
     margin: auto;
@@ -17,13 +21,26 @@ h1 {
     flex-wrap: wrap;
 }
 
-.project-gallery>.main-content {
-    flex: 0;
+.project-gallery>div {
+    flex: 1;
     max-width: 40rem;
     min-width: 20rem;
     padding: 1rem;
 }
 
-.project-gallery p, ul {
+.project-gallery .main-content {
+    margin: 0;
+}
+
+.project-gallery iframe {
+    aspect-ratio: 16/9;
+    width: 100%;
+}
+
+.project-gallery p  {
+    font-size: 0.8rem;
+}
+
+.project-gallery ul {
     font-size: 0.8rem;
 }

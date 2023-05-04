@@ -19,9 +19,16 @@ h1 {
     font-size: 3.5rem;
 }
 
+.tag-list {
+    max-width: 85rem;
+    margin: 0 auto 5rem auto;
+}
+
+
 .main-content {
     display: flex;
     flex-direction: row-reverse;
+    margin-bottom: 2rem;
 }
 
 .video-preview {
