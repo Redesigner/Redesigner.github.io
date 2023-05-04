@@ -23,9 +23,6 @@ h1 {
     display: flex;
     flex-direction: row-reverse;
 }
-body>.main-content:first-of-type {
-    padding-top: 0rem;
-}
 
 .video-preview {
     display: flex;
