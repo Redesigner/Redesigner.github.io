@@ -9,50 +9,230 @@
 </head>
 <body id="index" class="home">
 <ul class="navbar noprint">
-    <li class="avatar"><a href=".">
+    <li class="avatar"><a href="./#">
         <img src="./images/avatar.jpg" alt="Avatar">
         </a>
     </li>
-        <li><a class="noclick" href="./articles.html">Articles</a></li>
-        <li><a class="noclick" href="./projects.html">Projects</a></li>
+        <li>
+                <a class="noclick" href="./articles.html">Articles</a>
+        </li>
+        <li>
+                <a class="noclick" href="./#projects">Projects</a>
+        </li>
 
             <li><a class="noclick" href="./resume.html">Resume</a></li>
 
-</ul><div class='main-content'>
-        <link rel="stylesheet" type="text/css" href="./theme/css/index.css" />
-        
-        <h1 style="color: var(--color-secondary-light);">Stephen Melnick</h1>
-        <h2 style="color: var(--color-secondary-light); text-align: center;">Developer</h2>
-        <h2>Welcome to my website!</h2>
-        <p>Hello! My name is Stephen Melnick. I am a computer programmer, digital artist, and game designer. If you're interested in seeing some examples of my work, 
+</ul>
+        <div class='main-content'>
+            <link rel="stylesheet" type="text/css" href="./theme/css/index.css" />
+            
+        <h2 style="color: var(--color-secondary-light);">Stephen Melnick | Developer</h2>
+        <h1>About Me</h1>
+        <p>Hello! I'm Stephen Melnick, a computer programmer, digital artist, and game designer. If you're interested in seeing some examples of my work, 
             <a href="/category/projects.html">take a look at the  projects page</a>, or just look around the site. I am currently converting some of my design documents and reference guides into a web-friendly format, which you can view at the <a href="/category/articles.html">articles page.</a>
             If you'd like to see some more of my work or look at my code, I am always updating my projects on <a href="https://github.com/Redesigner?tab=repositories">GitHub</a>.
             I have been interested in programming and computers for as long as I can remember, and started off programming simple games in GameMaker, alongside my brother. Today, I program games and other software.
         </p>
-        <p style="font-size: 1.4rem;">
+        <p>
             You can contact me at
             <a href="mailto:stephenwmelnick@gmail.com">stephenwmelnick@gmail.com</a>
             for any inquires.
         </p>
+    
+        </div>
+        <div class='project-gallery' id="projects">
+<div class="main-content">
+    <div>
+        <h1><a href="./projects/rhythm-knights.html">Rhythm Knights</a></h1>
+        
+        <h2>What I worked on:</h2>
+        <ul>
+            <li>Graphics</li>
+            <li>Programming</li>
+            <li>Menus</li>
+            <li>Sound</li>
+        </ul>
         <p>
-            <h2>I have experience with many different programming languages:</h2>
-            <ul class="logos">
-                <li><img src="/images/logo/cpp.png" alt="C++" title="C++"></li>
-                <li><img src="/images/logo/csharp.png" alt="C#" title="C#"></li>
-                <li><img src="/images/logo/java.png" alt="Java" title="Java"></li>
-                <li><img src="/images/logo/javascript.png" alt="javascript" title="JavaScript"></li>
-                <li><img src="/images/logo/python.png" alt="python" title="Python"></li>
-                <li><img src="/images/logo/systemverilog.png" alt="systemverilog" title="SystemVerilog"></li>
-            </ul>
-            <h2>As well as experience with some other development tools:</h2>
-            <ul class="logos">
-                <li><img src="/images/logo/html.png" alt="html" title="HTML"></li>
-                <li><img src="/images/logo/css.png" alt="CSS" title="CSS"></li>
-                <li><img src="/images/logo/flask.png" alt="flask" title="Flask"></li>
-                <li><img src="/images/logo/git.png" alt="git" title="git"></li>
-                <li><img src="/images/logo/mysql.png" alt="mysql" title="MySQL"></li>
-            </ul>
+            A prototype for <a href="https://itch.io/jam/mini-jam-125-signal">MiniJam 125</a>.
+            Written using C# on the Godot Engine.
+            Rhythm Knights is a concept based around planning a turn-based game so that your characters play individual tracks,
+            with the whole party playing a song and scoring bonus points for harmonies. In this prototype, you can only play a few rhythm tracks.
+            It can be played in-browser <a href="https://sleepysunset.itch.io/rhythm-knights">here</a> (Desktop Only).
         </p>
+    
+
+            <a href="https://github.com/Redesigner/minijam125/">
+                <img src="./theme/img/GitHub-Mark-Light-32px.png" title="Check it out on GitHub!" alt="GitHub Logo" style="margin-bottom: 1rem;">
+            </a>
+        <hr>
+        <h3 class="timestamp">February 2023</h3>
+    </div>
+</div>
+<div class="main-content">
+    <iframe class="video-preview" src="https://www.youtube.com/embed/sbpjj-MdI-s"></iframe>
+    <div>
+        <h1><a href="./projects/rea-opengl.html">Rea OpenGL</a></h1>
+        
+        <p>
+            A C++ engine and OpenGL render pipeline.
+        </p>
+            <h2>Features</h2>
+            <ul>
+                <li>Custom render pipeline</li>
+                <li>Continuous collision detection</li>
+                <li>Wavefront (*.obj) mesh loading</li>
+                <li>Entity-component messaging system</li>
+                <li>Font rendering</li>
+            </ul>
+        <p>
+            This engine uses <a href="https://www.libsdl.org/">SDL2</a> for managing window and input events, <a href="https://www.libsdl.org/projects/SDL_image/">SDL-Image</a>, 
+            and the <a href="https://freetype.org/">FreeType library</a> for generating and caching bitmaps from system font files.
+        </p>
+        <p>
+            Continous collision detection is based on the <a href="">Gilbert-Johnson-Keerthi</a> model and my own implementation.
+            Rea uses a custom OpenGL render pipeline and supports loading of custom GLSL 4 shaders.
+        </p>
+    
+
+            <a href="https://github.com/Redesigner/Ceres">
+                <img src="./theme/img/GitHub-Mark-Light-32px.png" title="Check it out on GitHub!" alt="GitHub Logo" style="margin-bottom: 1rem;">
+            </a>
+        <hr>
+        <h3 class="timestamp">March 2022</h3>
+    </div>
+</div>
+<div class="main-content">
+    <iframe class="video-preview" src="https://www.youtube.com/embed/kr_94NOnLJE"></iframe>
+    <div>
+        <h1><a href="./projects/tether.html">Tether</a></h1>
+        
+        <h2>What I worked on:</h2>
+        <ul>
+            <li>C++ programming</li>
+            <li>Physics design and programming</li>
+            <li>Blueprint scripting</li>
+            <li>Game Design</li>
+            <li>Character Art</li>
+            <li>3D Modeling</li>
+            <li>Animation</li>
+            <li>Sound Effects</li>
+        </ul>
+        <p>
+            <b>Tether</b> was originally a game jam entry for the <a href="https://itch.io/jam/gmtk-2021">GMTK 2021 Game Jam</a>.
+            It is powered by Unreal Engine 4. Using the built-in raycasting and shape tracing functions of the engine, I programmed
+            the collision and movement. I took special care to make sure that the movement mechanics and physics performed
+            in a very specific manner, tweaking it so that everything feels smooth and fun. I recommend that you try out the
+            platforming physics for yourself.
+        </p>
+    
+
+<br>
+<div class="downloads noprint">
+        <a href="https://github.com/spencer-melnick/Tether/releases/download/Windows/tether-windows.zip" download>
+            tether-windows.zip<img src="./theme/img/icons/zip.png">
+        </a>
+        <a href="https://github.com/spencer-melnick/Tether" title="Check it out on GitHub!" alt="GitHub Logo" download>
+            <img src="./theme/img/GitHub-Mark-Light-32px.png">
+        </a>
+</div>        <hr>
+        <h3 class="timestamp">December 2021</h3>
+    </div>
+</div>
+<div class="main-content">
+    <div>
+        <h1><a href="./projects/gjk-for-c.html">GJK for C#</a></h1>
+        
+        <p>
+            This project is a 3D implementation of the Gilbert-Johnson-Keerthi distance algorithim, for use in <i>Continuous Collision Detection</i> physics simulations.
+            It contains a simple gift wrapping algorithim for determining convex hulls, and can calculate the distance between two 3D objects, as well as
+            calculate the shortest depenetration vector for resolving any overlaps. The interactive demo allows you to move a cube around in 3D space,
+            rendering the Minkowski difference of the two closest shapes, as well as the generated simplex.
+        </p>
+        <p>
+            You can check out the presentation that I wrote (linked below), explaining the basic principles of the algorithim, and some solutions to more practical problems
+            one might experience when implementing the algorithim, especially given its reliance on floating-point math.
+        </p>
+    
+
+<br>
+<div class="downloads noprint">
+        <a href="../downloads/Melnick-GJK-2021.pdf" download>
+            Melnick-GJK-2021.pdf<img src="./theme/img/icons/pdf.png">
+        </a>
+        <a href="../downloads/Melnick-GJK-2021.odp" download>
+            Melnick-GJK-2021.odp<img src="./theme/img/icons/odp.png">
+        </a>
+        <a href="https://github.com/Redesigner/Dialogue" title="Check it out on GitHub!" alt="GitHub Logo" download>
+            <img src="./theme/img/GitHub-Mark-Light-32px.png">
+        </a>
+</div>        <hr>
+        <h3 class="timestamp">March 2021</h3>
+    </div>
+</div>
+<div class="main-content">
+    <iframe class="video-preview" src="https://www.youtube.com/embed/_0YhCfh7C8k"></iframe>
+    <div>
+        <h1><a href="./projects/meritocracy-train.html">Meritocracy Train</a></h1>
+        
+        <h2>What I worked on:</h2>
+        <ul>
+            <li>Concept Art</li>
+            <li>Character Art</li>
+            <li>Stills</li>
+        </ul>
+        <p>
+            An entry for the 2020 <a href="https://globalgamejam.org/">Global Game Jam</a>, produced in 48 hours.
+            The original entry page <a href="https://globalgamejam.org/2020/games/meritocracy-train-8">can be found here.</a>
+            </br>
+            This entry was made with a team of seven, based on a theme revealed at the start of the jam.
+            It runs in <a href="https://unity.com/">Unity</a>.
+        </p>
+    
+
+            <a href="https://github.com/BuiltInParris/The-Meritocracy-Train">
+                <img src="./theme/img/GitHub-Mark-Light-32px.png" title="Check it out on GitHub!" alt="GitHub Logo" style="margin-bottom: 1rem;">
+            </a>
+        <hr>
+        <h3 class="timestamp">January 2020</h3>
+    </div>
+</div>
+<div class="main-content">
+    <iframe class="video-preview" src="https://www.youtube.com/embed/uzE3dhLQSSU"></iframe>
+    <div>
+        <h1><a href="./projects/hearth.html">Hearth</a></h1>
+        
+        <h2>What I worked on:</h2>
+        <ul>
+            <li>Game Design</li>
+            <li>Character Art</li>
+            <li>Animation</li>
+        </ul>
+        <p>
+            A 2019 entry for the Global Game Jam, produced in 48 hours. You can find the orignal entry page on the 
+            <a href="https://globalgamejam.org/2019/games/hearth-6">Global Game Jam website</a>.
+            </br>
+            This entry was made with a team of five, based on a theme revealed at the start of the jam.
+            It runs in the <a href="https://godotengine.org/">Godot Engine</a>.
+        </p>
+        <p>
+            I also wrote an expanded game design document for use in a potential
+            full-scale project, that you can download below.
+        </p>
+    
+
+<br>
+<div class="downloads noprint">
+        <a href="/downloads/HearthDesignDocument.pdf" download>
+            HearthDesignDocument.pdf<img src="./theme/img/icons/pdf.png">
+        </a>
+        <a href="https://github.com/spencer-melnick/hearth" title="Check it out on GitHub!" alt="GitHub Logo" download>
+            <img src="./theme/img/GitHub-Mark-Light-32px.png">
+        </a>
+</div>        <hr>
+        <h3 class="timestamp">January 2019</h3>
+    </div>
+</div>
+        </div>
         <p style="font-size: 0.8rem; line-height: 1.2rem; text-align:center;"><i>
             This website was entirely developed by me, and is powered by <a href="https://blog.getpelican.com/">Pelican Static Site Generator for Python.</a><br>
             Code highlighting is powered by <a href="https://highlightjs.org/">highlight.js</a><br>
@@ -60,8 +240,6 @@
             GitHub logo is provided by GitHub, Inc. via <a href="https://github.com/logos">their website.</a><br>
             ODF presentation icon is provided by the Apache Software Foundation via <a href="https://www.openoffice.org/ui/VisualDesign/ODF_icons4print.html">their website.</a>
         </i></p>
-    
-</div>
     <footer>
         Copyright © 2021 Stephen Melnick
         <br>
