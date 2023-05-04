@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="./theme/css/diagram.css">
 
 <div class="main-content">
-	<h1><a href="./articles/designing-networked-player-actions-pt-1.html" title="permalink">Designing Networked Player Actions Pt. 1</a></h1>
+	<h1><a href="./articles/designing-networked-player-actions.html" title="permalink">Designing Networked Player Actions</a></h1>
 		
 <h2>Authority</h2>
 <p>In order to plan our networking for our multiplayer game, we need to first consider the concept of authority. Due to the fact that any network has some kind of latency, every user in the game has a slightly different copy of the world. The server copy of the world is the 'real' one - the server has authority over everything in the world. If we imagine the clients as strictly 'viewers' of the game world, the server simply tells the clients where every object in the world is. When a client receives the message describing the position of those objects, it updates its 'shadow' copy to reflect these changes.<a class="citation" href="#ref.net1.1">[1]</a></p>
