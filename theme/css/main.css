@@ -155,7 +155,7 @@ ul.navbar>li.avatar {
     padding-left: 0;
 }
 
-.tag-list>.tag {
+.tag-list>li {
     font-size: 1rem;
     line-height: 1rem;
     flex: 0;
@@ -165,6 +165,14 @@ ul.navbar>li.avatar {
     border-radius: .25rem;
     
     white-space: nowrap;
+}
+
+.tag-list>.language {
+    background-color: dodgerblue;
+}
+
+.tag-list>.engine {
+    background-color: darkred;
 }
 /* ============ End tags ============= */
 
@@ -306,7 +314,7 @@ code, .code {
 
 @media only screen and (max-device-width: 1024px) {
     html{
-        font-size: 2vw;
+        font-size: 3vw;
     }
     ul.navbar>li {
         /*! padding: 2rem 0 2rem 0; */

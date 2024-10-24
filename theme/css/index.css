@@ -50,3 +50,11 @@ h1 {
 .project-gallery ul {
     font-size: 0.8rem;
 }
+
+@media only screen and (max-device-width: 1024px) {
+    .project-gallery>div:first-of-type
+    {
+        max-width: 50rem;
+        min-width: 30rem;
+    }
+}
