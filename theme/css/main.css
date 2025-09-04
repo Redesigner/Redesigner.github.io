@@ -43,6 +43,21 @@ p {
     box-shadow: var(--shadow);
 }
 
+.head-label {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    max-width: 75rem;
+    
+    padding: 1rem;
+    padding-top: 2.5rem;
+
+    background-color: var(--color-primary-dark);
+    margin-bottom: 5rem;
+    
+    box-shadow: var(--shadow);
+}
+
 small {
     font-size: 0.8rem;
 }
